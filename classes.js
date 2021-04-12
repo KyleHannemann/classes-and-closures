@@ -30,7 +30,18 @@
 */
 
 //Code Here
+class Employee{
+  constructor(first_name, last_name, email, age){
+    this.first_name = first_name,
+    this.last_name = last_name,
+    this.email = email
+    this.age = age
+  }
+makeWidget(){
+  return this.first_name + " " + this.last_name + " Widget";
+}
 
+}
 
 ////////// PROBLEM 2 //////////
 
@@ -48,13 +59,29 @@
 */
 
 //Code Here
+class Manager extends Employee{
+  constructor(first_name, last_name,email, age){
+    super(first_name, last_name, email, age)
+    this.reports = [];
+  }
+  hire(employee){
+    this.reports.push(employee)
+  }
+  fire(index){
+    this.reports.splice(index, 1);
+    
+  }
+
+}
+let kyl = new Manager('k', 'h', 'yo', 28);
 
 
 ////////// PROBLEM 3 //////////
 
 /*
   Managers for Widget Co. get promoted when they get more employees, and get a bonus when they fire employees.
-  create a class ProgressiveManager that extends Manager.  A Progressive Manager has all of the same properties as a manager with the following additional properties:
+  create a class ProgressiveManager that extends Manager.  A Progressive Manager has 
+  all of the same properties as a manager with the following additional properties:
     - title - default 'Not a manager'
     - bonus - default 0
 
@@ -72,8 +99,35 @@
 */
 
 //Code Here
-
-
+class ProgressiveManager extends Manager{
+    constructor(first_name, last_name, email, age, reports){
+      super(first_name, last_name, email, age, reports),
+      this.title = 'Not a manager',
+      this.bonus = 0
+    }
+    fire(index){
+      super.fire(index);
+      this.bonus += 100;
+      let size = this.reports.length;
+      if (size >= 1 && size <=3){this.title = 'Barely Manager'}
+      else if (size >= 4 && size <= 10){ this.title = 'Mostly Manager'}
+      else if (size >= 11 && size <= 50){this.title = 'Manager'}
+      else if (size >= 51 && size <= 100){this.title = 'Manager Plus'}
+      else if (size > 100){this.title = 'Bestest Manager'}
+      else{this.title = 'Not a Manager'}
+    }
+    hire(employee){
+      super.hire(employee);
+      let size = this.reports.length;
+      if (size >= 1 && size <=3){this.title = 'Barely Manager'}
+      else if (size >= 4 && size <= 10){ this.title = 'Mostly Manager'}
+      else if (size >= 11 && size <= 50){this.title = 'Manager'}
+      else if (size >= 51 && size <= 100){this.title = 'Manager Plus'}
+      else if (size > 100){this.title = 'Bestest Manager'}
+      else{this.title = 'Not a Manager'}
+      
+}
+}
 
 ////////// PROBLEM 4 - Black Diamond //////////
 
@@ -99,5 +153,31 @@
 */
 
 //Code Here
+class Machine{
+  constructor(){
+    this.widgets_made_count = 0
+    this.wear_and_tear_count = 0
+    this.needs_reboot = false
+    
+  }
+  makeWidgets(n){
+      this.widgets_made_count += n;
+      let currentW = this.widgets_made_count;
+      let newWear = 0;
+      for (var i = 50; i <= currentW; i += 50){
+        newWear += 1;
+      }
+      this.wear_and_tear_count = newWear;
+  }
+  fixMachine(){
+    this.needs_reboot = true;
+  }
+  reboot(){
+    
+    return ()=>{
+      this.wear_and_tear_count -= 10; this.needs_reboot = false}
+    }
+}
+
 
 
